@@ -1,0 +1,68 @@
+        .input_container {
+            background-color: aqua;
+            height: 15vh;
+            /* border: 2px solid black; */
+            text-align: center;
+            /* justify-content: center; */
+            font-family: 'Open Sans', sans-serif;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        body {
+            flex-direction: row;
+            font-size: 22px;
+            font-weight: bolder;
+        }
+        
+        .input_box {
+            height: 2.0rem;
+            width: 42%;
+            border: none;
+            border-radius: 42%;
+            margin: 8px;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1.5rem;
+            text-align: center;
+            font-weight: bolder;
+        }
+        
+        .heading {
+            color: crimson;
+            font-size: 3rem;
+        }
+        
+        .task-container {
+            height: 75vh;
+            /* border: 2px solid blue; */
+            background-color: yellow;
+            color: rgb(112, 11, 243);
+            text-align: center;
+            font-family: 'Open Sans', sans-serif;
+        }
+        
+        .task {
+            height: 2.5rem;
+            /* border: 2px solid black; */
+            font-weight: bolder;
+            font-size: 2.2rem;
+            background-color: #ffdc30;
+            margin: 2px;
+            border-radius: 17%;
+            padding: 3px;
+            align-self: center;
+            font-family: 'Dancing Script', cursive;
+        }
+        
+        .task_list {
+            /* border: 2px solid red; */
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            padding: 1px;
+            width: auto;
+            position: relative;
+        }

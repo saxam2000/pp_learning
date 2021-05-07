@@ -1,0 +1,17 @@
+{
+    "name": "npm",
+    "version": "1.0.0",
+    "description": "",
+    "main": "mycli.js",
+    "bin": {
+        "do-the-thing": "mycli.js"
+    },
+    "scripts": {
+        "test": "organise"
+    },
+    "keywords": [
+        "organise"
+    ],
+    "author": "saksham",
+    "license": "ISC"
+}

@@ -1,0 +1,223 @@
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #ecf0f1;
+        }
+        
+        .header {
+            background-color: rgb(90, 90, 5);
+            height: 10vh f display: flex;
+            /* justify-content: center; */
+            align-items: center;
+        }
+        
+        .toolbar {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            height: 8vh;
+            /* border: 3px solid blueviolet; */
+            width: 50%;
+            position: relative;
+            left: 11rem;
+            /* position: absolute; */
+        }
+        
+        .filter_container {
+            display: flex;
+            height: 80%;
+            width: 30%;
+            /* border: 2px solid green; */
+            margin: 1px 0px 1px 1px;
+            background-color: rgb(155, 155, 7);
+        }
+        
+        .filter_colorbox {
+            height: 50%;
+            width: 50%;
+            border: 2px solid rgb(75, 46, 46);
+            border-radius: 5px;
+        }
+        
+        .filter {
+            display: flex;
+            height: 100%;
+            width: 25%;
+            justify-content: center;
+            margin-inline-start: 5px;
+            align-items: center;
+            /* background-color: rgb(155, 155, 7); */
+            /* border: 2px solid rgb(187, 77, 77); */
+        }
+        
+        .color1 {
+            background-color: aqua;
+        }
+        
+        .color2 {
+            background-color: rgb(23, 228, 101);
+        }
+        
+        .color3 {
+            background-color: rgb(218, 114, 18);
+        }
+        
+        .color4 {
+            background-color: rgb(196, 31, 168);
+        }
+        
+        .action-container {
+            /* border: 2px solid blue; */
+            background-color: rgb(155, 155, 7);
+            width: 20%;
+            height: 80%;
+            display: flex;
+            position: relative;
+            color: rgb(245, 206, 206);
+            left: 5rem;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+        
+        .icon-container {
+            width: 50%;
+            /* border: 1px solid red; */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        /* icons -> text */
+        
+        .fas {
+            font-size: 1.5rem;
+        }
+        
+        .active {
+            background-color: #474a4b;
+        }
+        
+        .newtaskbox {
+            box-shadow: 4px;
+            display: flex;
+            flex-direction: row;
+            height: 65%;
+            width: 45%;
+            /* border: 2px solid red; */
+        }
+        
+        .colour_select_panel {
+            background-color: rgb(4, 59, 41);
+            display: flex;
+            flex-direction: column;
+            width: 30%;
+            height: 100%;
+            /* border: 2px solid green; */
+        }
+        
+        .colour_option {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            height: 25%;
+            width: 100%;
+            /* border: 2px solid black; */
+        }
+        
+        .colour_select {
+            height: 80%;
+            width: 70%;
+            border-radius: 5px;
+            /* border: 2px solid black; */
+        }
+        
+        .task_message_panel {
+            height: 100%;
+            width: 70%;
+            /* border: 2px solid yellow; */
+            background: white;
+        }
+        
+        .text_area {
+            height: 100%;
+            font-size: 1.7rem;
+            cursor: pointer;
+            width: 100%;
+            border: none;
+            text-align: center;
+            padding: 15px;
+        }
+        
+        .selected_border {
+            border: 2px solid white;
+        }
+        
+        .main-container {
+            height: 80vh;
+            box-shadow: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        /* .modal_container {
+            height: 18rem;
+            width: 36rem;
+            background-color: brown;
+            display: flex;
+            box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.698);
+        } */
+        
+        .modal_container {
+            left: 23vw;
+            top: 30vh;
+            position: absolute;
+            background-color: bisque;
+            height: 55vh;
+            padding: 2rem;
+            padding-left: 3rem;
+            border: 2px dashed red;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            flex-wrap: wrap;
+        }
+        
+        .main_container {
+            height: 88vh;
+            padding-top: 2rem;
+            padding-left: 3rem;
+            display: flex;
+            justify-content: space-evenly;
+            flex-wrap: wrap;
+        }
+        
+        .task_filter {
+            height: 7%;
+        }
+        
+        .task_container {
+            height: 10rem;
+            width: 16rem;
+            background-color: #fff;
+        }
+        
+        .task_desc_container {
+            height: 80%;
+            padding-left: 0.5rem;
+        }
+        
+        .task_desc {
+            height: 70%;
+            overflow: auto;
+            text-align: center;
+            /* words */
+            word-break: break-all;
+        }
+        
+        .uid {
+            color: #444;
+            margin-bottom: 0.1rem;
+            ;
+        }
