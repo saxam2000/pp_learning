@@ -37,8 +37,12 @@ function initCurrentSheetDb() {
                 fontSize: "12",
                 halign: "left",
                 value: "",
-                fontColor: "black",
-                bgColor: "#ffffff"
+                checkValue: "",
+                color: "#000000",
+                fontColor: "#000000",
+                bgColor: "#ffffff",
+                formula: "",
+                children: []
             }
 
             row.push(cell);
