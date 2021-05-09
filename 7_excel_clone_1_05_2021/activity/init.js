@@ -34,9 +34,11 @@ function initCurrentSheetDb() {
                 italic: "normal",
                 underline: "none",
                 fontFamily: "Arial",
-                fontSize: "10",
+                fontSize: "12",
                 halign: "left",
-                value: ""
+                value: "",
+                fontColor: "black",
+                bgColor: "#ffffff"
             }
 
             row.push(cell);

@@ -97,7 +97,7 @@ for (let i = 0; i < Allcells.length; i++) {
         let cell = document.querySelector(`.col[rid ="${arid}"][cid = "${acid}"]`);
         selectedcell = cell;
 
-        //make changed in ui according to clicked cell
+        //make changed in  top ui according to clicked cell
         let cellObject = sheetDB[rid][cid];
         if (cellObject.bold == true) {
             boldbtn.classList.add("active-btn");
@@ -127,6 +127,11 @@ for (let i = 0; i < Allcells.length; i++) {
         }
         fontfamilyselect.value = cellObject.fontFamily;
         fontsizeselect.value = cellObject.fontSize;
+        bgcolourselect.value = cellObject.bgColor;
+        console.log(bgcolourselect.value);
+        colourselect.value = cellObject.fontColor;
+
+
     });
 }
 Allcells[0].click();
@@ -154,14 +159,17 @@ fontsizeselect.addEventListener("change", function() {
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>colour container<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 colourselect.addEventListener("change", function() {
-    let cellObject = sheetDB[arid][acid];
     selectedcell.style.color = colourselect.value;
+    let cellObject = sheetDB[arid][acid];
+    cellObject.fontColor = colourselect.value;
 
 })
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>background  colour container<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 bgcolourselect.addEventListener("change", function() {
     selectedcell.style.backgroundColor = bgcolourselect.value;
+    let cellObject = sheetDB[arid][acid];
+    cellObject.bgColor = bgcolourselect.value;
 
 })
 
@@ -220,6 +228,9 @@ function initUI() {
         Allcells[i].style.textDecoration = "none";
         Allcells[i].style.fontFamily = "Arial";
         Allcells[i].style.fontSize = "16px";
+        Allcells[i].style.fontColor = "black";
+        Allcells[i].style.color = "black";
+        Allcells[i].style.backgroundColor = "#ffffff";
         Allcells[i].style.textAlign = "left";
         Allcells[i].innerText = "";
     }
@@ -244,7 +255,7 @@ function setUI(sheetDB) {
     for (let i = 0; i < sheetDB.length; i++) {
         for (let j = 0; j < sheetDB[i].length; j++) {
             let cell = document.querySelector(`.col[rid="${i}"][cid="${j}"]`);
-            let { bold, italic, underline, fontFamily, fontSize, halign, value } = sheetDB[i][j];
+            let { bold, italic, underline, fontFamily, fontSize, halign, value, fontColor, bgColor } = sheetDB[i][j];
             cell.style.fontWeight = bold == true ? "bold" : "normal";
             cell.innerText = value;
             cell.style.fontStyle = italic;
@@ -252,6 +263,8 @@ function setUI(sheetDB) {
             cell.style.fontSize = fontSize;
             cell.style.fontFamily = fontFamily;
             cell.style.textAlign = halign;
+            cell.style.backgroundColor = bgColor;
+            cell.style.fontColor = fontColor;
 
         }
     }
