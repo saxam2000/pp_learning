@@ -5,33 +5,38 @@ let Allcells = document.querySelectorAll(".grid .col");
 let addressBar = document.querySelector(".address-box");
 let arid = 0;
 let acid = 0;
-let affectedcell = document.querySelector(`.col[rid ="${arid}"][cid = "${acid}"]`);
-// addressBar.value = address;
-
-
-
-
-
-////////////////////////// alignement buttons events//////////////////////////////////////////
+let selectedcell;
+let sheetidx = 0;
+let fontsizeselect = document.querySelector(".font-size");
 let alignmentbtns = document.querySelectorAll(".alignment-container .align-btn")
+
+let colourselect = document.querySelector("#color");
+let bgcolourselect = document.querySelector("#bg-color");
+let boldbtn = document.querySelector(".bold");
+let italicbtn = document.querySelector(".italic");
+let underlinebtn = document.querySelector(".underline");
+let fontfamilyselect = document.querySelector(".font-family");
+let sheetDB = workSheetDB[0];
+
+////////////////////////// alignment buttons events//////////////////////////////////////////
 for (let i = 0; i < alignmentbtns.length; i++) {
     alignmentbtns[i].addEventListener("click", function d() {
         // console.log("hello")
-
+        for (let j = 0; j < alignmentbtns.length; j++) {
+            alignmentbtns[j].classList.remove("active-btn");
+        }
+        alignmentbtns[i].classList.add("active-btn");
         console.log(alignmentbtns[i].classList[1]);
-        // console.log()
-        let rid = Number(addressBar.getAttribute("rid"));
-        let cid = Number(addressBar.getAttribute("cid"));
-        arid = rid;
-        acid = cid;
-
-        let cell = document.querySelector(`.col[rid ="${arid}"][cid = "${acid}"]`);
-        cell.style.textAlign = alignmentbtns[i].classList[1]
+        let cellObject = sheetDB[arid][acid];
+        cellObject.halign = alignmentbtns[i].classList[1];
+        selectedcell.style.textAlign = alignmentbtns[i].classList[1];
     })
 }
+
 firstSheet.addEventListener("click", handleActiveSheet);
+
 addbuttonContainer.addEventListener("click", function() {
-    console.log("hello");
+    console.log("add button clicked");
     let sheetArr = document.querySelectorAll(".sheet");
     let lastSheetElem = sheetArr[sheetArr.length - 1];
     let idx = lastSheetElem.getAttribute("sheetIdx");
@@ -41,8 +46,25 @@ addbuttonContainer.addEventListener("click", function() {
     NewSheet.setAttribute("sheetIdx", idx + 1);
     NewSheet.innerText = ` Sheet ${ idx + 1 }`;
     sheetList.appendChild(NewSheet);
+    //remove active sheet class from all sheets
+    sheetArr.forEach(function(sheet) {
+        sheet.classList.remove("active-sheet");
+    });
+
+    //get latestAdded sheet
+    let newSheetArr = document.querySelectorAll(".sheet");
+    // add active sheet class to latest added sheet
+    newSheetArr[newSheetArr.length - 1].classList.add("active-sheet");
+    // initialise new sheetdb database
+    initCurrentSheetDb();
+    let newSheetIdx = idx + 1;
+    sheetDB = workSheetDB[idx];
+
+    // initialise new page with new values
+    initUI();
     NewSheet.addEventListener("click", handleActiveSheet);
 })
+
 
 function handleActiveSheet(e) {
     let MySheet = e.currentTarget;
@@ -53,10 +75,13 @@ function handleActiveSheet(e) {
     if (!MySheet.classList[1]) {
         MySheet.classList.add("active-sheet");
     }
+    let sheetIdx = MySheet.getAttribute("sheetIdx");
+    sheetDB = workSheetDB[sheetIdx - 1];
+    //set  UI from clicked sheet according to database
+    setUI(sheetDB);
 }
 
-
-//............................select event for cells///////////////////////////////
+//............................select event for cells............................./////////////////////
 for (let i = 0; i < Allcells.length; i++) {
     Allcells[i].addEventListener("click", function handleCell() {
         let rid = Number(Allcells[i].getAttribute("rid"));
@@ -70,89 +95,165 @@ for (let i = 0; i < Allcells.length; i++) {
         acid = cid;
         arid = rid;
         let cell = document.querySelector(`.col[rid ="${arid}"][cid = "${acid}"]`);
-        afffectedcell = cell;
+        selectedcell = cell;
+
+        //make changed in ui according to clicked cell
+        let cellObject = sheetDB[rid][cid];
+        if (cellObject.bold == true) {
+            boldbtn.classList.add("active-btn");
+        } else {
+            boldbtn.classList.remove("active-btn");
+        }
+        if (cellObject.italic == true) {
+            italicbtn.classList.add("active-btn");
+        } else {
+            italicbtn.classList.remove("active-btn");
+        }
+        if (cellObject.underline == true) {
+            underlinebtn.classList.add("active-btn");
+        } else {
+            underlinebtn.classList.remove("active-btn");
+        }
+
+        for (let i = 0; i < alignmentbtns.length; i++) {
+            alignmentbtns[i].classList.remove("active-btn");
+        }
+        if (cellObject.halign == "left") {
+            alignmentbtns[0].classList.add("active-btn");
+        } else if (cellObject.halign == "center") {
+            alignmentbtns[1].classList.add("active-btn");
+        } else if (cellObject.halign == "right") {
+            alignmentbtns[2].classList.add("active-btn");
+        }
+        fontfamilyselect.value = cellObject.fontFamily;
+        fontsizeselect.value = cellObject.fontSize;
     });
 }
 Allcells[0].click();
 
-
-
 //>>>>>>>>>>>>>>>>>>>>>font family drop down event management<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-
-let fontfamilyselect = document.querySelector(".font-family");
 fontfamilyselect.addEventListener("change", function() {
     console.log(fontfamilyselect.value);
     let cell = document.querySelector(`.col[rid ="${arid}"][cid = "${acid}"]`);
     console.log(cell.getAttribute("rid"));
     cell.style.fontFamily = fontfamilyselect.value;
+    let cellObject = sheetDB[arid][acid];
+    cellObject.fontFamily = fontfamilyselect.value;
     console.log("font-family changed");
 })
 
 //>>>>>>>>>>>>>>>>>>>>>font size drop down event management<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-
-let fontsizeselect = document.querySelector(".font-size");
 fontsizeselect.addEventListener("change", function() {
-    let cell = document.querySelector(`.col[rid ="${arid}"][cid = "${acid}"]`);
-    console.log(cell.getAttribute("rid"));
-    cell.style.fontSize = fontsizeselect.value + "px";
-    console.log("font-size changed");
-})
+    let cellObject = sheetDB[arid][acid];
 
+    console.log(selectedcell.getAttribute("rid"));
+    selectedcell.style.fontSize = fontsizeselect.value + "px";
+    console.log("font-size changed");
+    cellObject.fontSize = fontsizeselect.value;
+})
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>colour container<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-let colourselect = document.querySelector("#color");
 colourselect.addEventListener("change", function() {
-    let cell = document.querySelector(`.col[rid ="${arid}"][cid = "${acid}"]`);
-    cell.style.color = colourselect.value;
+    let cellObject = sheetDB[arid][acid];
+    selectedcell.style.color = colourselect.value;
 
 })
 
-
-
-
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>background  colour container<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-let bgcolourselect = document.querySelector("#bg-color");
 bgcolourselect.addEventListener("change", function() {
-    let cell = document.querySelector(`.col[rid ="${arid}"][cid = "${acid}"]`);
-    cell.style.backgroundColor = bgcolourselect.value;
+    selectedcell.style.backgroundColor = bgcolourselect.value;
 
 })
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>bold button event<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-let boldbtn = document.querySelector(".bold");
 boldbtn.addEventListener("click", function() {
-    let cell = document.querySelector(`.col[rid ="${arid}"][cid = "${acid}"]`);
-    if (cell.style.fontWeight == 900) {
-        cell.style.fontWeight = 100;
+    let cellObject = sheetDB[arid][acid];
+    if (selectedcell.style.fontWeight == "bold") {
+        selectedcell.style.fontWeight = "normal";
+        boldbtn.classList.remove("active-btn");
+        cellObject.bold = false;
 
     } else {
-        cell.style.fontWeight = 900;
+        selectedcell.style.fontWeight = "bold";
+        cellObject.bold = true;
+        boldbtn.classList.add("active-btn");
     }
+
 })
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>italic button event<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-let italicbtn = document.querySelector(".italic");
 italicbtn.addEventListener("click", function() {
-        let cell = document.querySelector(`.col[rid ="${arid}"][cid = "${acid}"]`);
-        if (cell.style.fontStyle == "italic") {
-            cell.style.fontStyle = "normal";
-
-        } else {
-            cell.style.fontStyle = "italic";
-        }
-    })
-    //>>>>>>>>>>>>>>>>>>>>>>>>>>>underline button event<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-let underlinebtn = document.querySelector(".underline");
-underlinebtn.addEventListener("click", function() {
-    let cell = document.querySelector(`.col[rid ="${arid}"][cid = "${acid}"]`);
-    if (cell.style.textDecoration == "underline") {
-        cell.style.textDecoration = "none";
+    let cellObject = sheetDB[arid][acid];
+    if (selectedcell.style.fontStyle == "italic") {
+        italicbtn.classList.remove("active-btn");
+        cellObject.italic = false;
+        selectedcell.style.fontStyle = "normal";
 
     } else {
-        cell.style.textDecoration = "underline";
+        cellObject.italic = true;
+        italicbtn.classList.add("active-btn");
+        selectedcell.style.fontStyle = "italic";
     }
 })
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>underline button event<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+underlinebtn.addEventListener("click", function() {
+    let cellObject = sheetDB[arid][acid];
+    if (selectedcell.style.textDecoration == "underline") {
+        underlinebtn.classList.remove("active-btn");
+        cellObject.underline = false;
+        selectedcell.style.c = "none";
+
+    } else {
+        cellObject.underline = true;
+        underlinebtn.classList.add("active-btn");
+        selectedcell.style.textDecoration = "underline";
+    }
+})
+
+
+
+function initUI() {
+    for (let i = 0; i < Allcells.length; i++) {
+        Allcells[i].style.fontWeight = "normal";
+        Allcells[i].style.fontStyle = "normal";
+        Allcells[i].style.textDecoration = "none";
+        Allcells[i].style.fontFamily = "Arial";
+        Allcells[i].style.fontSize = "16px";
+        Allcells[i].style.textAlign = "left";
+        Allcells[i].innerText = "";
+    }
+    Allcells[0].click();
+
+}
+
+
+
+//add event on every cell so it can update value in its corresponding databasefor(let i = 0; i < Allcells.length; i++) {
+for (let i = 0; i < Allcells.length; i++) {
+    Allcells[i].addEventListener("keypress", function handleCell(e) {
+        let address = addressBar.value;
+        // let { rid, cid } = getRIdCIdfromAddress(address);
+        let cellObject = sheetDB[arid][acid];
+        // let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+        cellObject.value += e.key;
+    });
+}
+
+function setUI(sheetDB) {
+    for (let i = 0; i < sheetDB.length; i++) {
+        for (let j = 0; j < sheetDB[i].length; j++) {
+            let cell = document.querySelector(`.col[rid="${i}"][cid="${j}"]`);
+            let { bold, italic, underline, fontFamily, fontSize, halign, value } = sheetDB[i][j];
+            cell.style.fontWeight = bold == true ? "bold" : "normal";
+            cell.innerText = value;
+            cell.style.fontStyle = italic;
+            cell.style.textDecoration = underline;
+            cell.style.fontSize = fontSize;
+            cell.style.fontFamily = fontFamily;
+            cell.style.textAlign = halign;
+
+        }
+    }
+    Allcells[0].click();
+}

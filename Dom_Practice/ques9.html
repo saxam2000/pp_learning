@@ -223,6 +223,23 @@
     </p>
     <script>
         // Q Implement key taps such that on pressing 1 you scroll to section 1,  pressing 2 you scroll to section 2 and  pressing 3 you scroll to section 3. Also implement key tap b to go to bottom of the page and key tap t to go to top of the page
+        let section1 = document.querySelector("#s1");
+        let section2 = document.querySelector("#s2");
+        let section3 = document.querySelector("#s3");
+        document.body.addEventListener("keydown", function(e) {
+
+            if (e.key == "1") {
+                section1.scrollIntoView();
+            } else if (e.key == "2") {
+                section2.scrollIntoView();
+            } else if (e.key == "3") {
+                section3.scrollIntoView();
+            } else if (e.key == "t") {
+                document.body.scrollIntoView();
+            } else if (e.key == "b") {
+                document.body.scrollIntoView(false);
+            }
+        })
     </script>
 </body>
 
