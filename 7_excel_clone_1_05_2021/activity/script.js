@@ -89,7 +89,10 @@ for (let i = 0; i < Allcells.length; i++) {
         let rid = Number(Allcells[i].getAttribute("rid"));
         let cid = Number(Allcells[i].getAttribute("cid"));
         let rowAdd = rid + 1;
+
         let colAdd = String.fromCharCode(cid + 65);
+
+
         let address = colAdd + rowAdd;
         addressBar.value = address;
         addressBar.setAttribute("rid", rid);
@@ -133,7 +136,7 @@ for (let i = 0; i < Allcells.length; i++) {
         colourselect.value = cellObject.fontColor;
         formulaInput.value = cellObject.formula;
         //value at the time of click in clicked cell
-        cellObject.checkValue = Allcells[i].innerText;
+        cellObject.initialValue = Allcells[i].innerText;
 
 
     });
@@ -260,11 +263,11 @@ for (let i = 0; i < Allcells.length; i++) {
     });
     Allcells[i].addEventListener("blur", function() {
         let cellObject = sheetDB[arid][acid];
-        if (cellObject.value != cellObject.checkValue) { //if value changed
+        if (cellObject.value != cellObject.initialValue) { //if value changed
             if (cellObject.formula) {
                 removeFormula(cellObject);
             }
-            changeChildrens(cellObject);
+            updateChildren(cellObject);
 
         }
     })
@@ -314,7 +317,7 @@ formulaInput.addEventListener("keydown", function(e) {
         setFormula(evaluatedValue, newFormula);
         // db -> works
         // setcontentInDB(value, formula);
-        changeChildrens(cellObject);
+        updateChildren(cellObject);
     }
 })
 
@@ -331,7 +334,8 @@ function evaluateFormula(formula) {
             // console.log(formulaTokens[i]);
             let { rid, cid } = getRIdCIdfromAddress(formulaTokens[i]);
             let cellObject = sheetDB[rid][cid];
-            let { value } = cellObject;
+            // let { value } = cellObject;
+            let value = cellObject.value;
             formula = formula.replace(formulaTokens[i], value);
         }
     }
@@ -411,37 +415,18 @@ function setFormula(evaluatedValue, formula) {
 
 function updateChildren(cellObject) {
     let childrenArray = cellObject.children;
-    console.log(childrenArray);
+    // console.log(childrenArray);
     //go to every child and update its value....
     for (let i = 0; i < childrenArray.length; i++) {
         let chAddress = childrenArray[i];
         let chRICIObj = getRIdCIdfromAddress(chAddress);
-        console.log("chobj=", chRICIObj);
-        let chObj = sheetDB[chRICIObj.rid][chRICIObj.cid];
-        let formula = chObj.formula;
+        // console.log("chobj=", chRICIObj);
+        let childcellObj = sheetDB[chRICIObj.rid][chRICIObj.cid];
+        let formula = childcellObj.formula;
         let evaluatedValue = evaluateFormula(formula);
         setUIByFormula(evaluatedValue, chRICIObj.rid, chRICIObj.cid);
-        chObj.value = evaluatedValue;
+        childcellObj.value = evaluatedValue;
         //recursive call so that work will be done to every level
-        updateChildrens(chObj);
+        updateChildren(childcellObj);
     }
-}
-
-function changeChildrens(cellObject) {
-    let childrens = cellObject.children;
-    if (childrens.length == 0) return;
-    console.log(childrens.length);
-    for (let i = 0; i < childrens.length; i++) {
-        let chAddress = childrens[i];
-
-        let chRICIObj = getRIdCIdfromAddress(chAddress);
-        let { rid, cid } = getRIdCIdfromAddress(chAddress);
-        let chObj = sheetDB[chRICIObj.rid][chRICIObj.cid];
-        let formula = chObj.formula;
-        let evaluatedValue = evaluateFormula(formula);
-        setUIByFormula(evaluatedValue, chRICIObj.rid, chRICIObj.cid);
-        chObj.value = evaluatedValue;
-        changeChildrens(chObj);
-    }
-
 }

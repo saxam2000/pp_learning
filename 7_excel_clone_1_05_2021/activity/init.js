@@ -37,7 +37,7 @@ function initCurrentSheetDb() {
                 fontSize: "12",
                 halign: "left",
                 value: "",
-                checkValue: "",
+                initialValue: "",
                 color: "#000000",
                 fontColor: "#000000",
                 bgColor: "#ffffff",
