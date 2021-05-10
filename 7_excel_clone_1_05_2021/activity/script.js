@@ -2,14 +2,17 @@ let addbuttonContainer = document.querySelector(".add_sheet_container");
 let sheetList = document.querySelector(".sheets-list");
 let firstSheet = document.querySelector(".sheet");
 let Allcells = document.querySelectorAll(".grid .col");
+
 let addressBar = document.querySelector(".address-box");
-let address = addressBar.value;
+let address;
 let arid = 0;
 let acid = 0;
 let selectedcell;
 let sheetidx = 0;
 let fontsizeselect = document.querySelector(".font-size");
-let alignmentbtns = document.querySelectorAll(".alignment-container .align-btn")
+let alignmentbtns = document.querySelectorAll(
+    ".alignment-container .align-btn"
+);
 
 let colourselect = document.querySelector("#color");
 let bgcolourselect = document.querySelector("#bg-color");
@@ -19,6 +22,8 @@ let underlinebtn = document.querySelector(".underline");
 let fontfamilyselect = document.querySelector(".font-family");
 let formulaInput = document.querySelector(".formula-box");
 let sheetDB = workSheetDB[0];
+initUI();
+let cellObject;
 
 ////////////////////////// alignment buttons events//////////////////////////////////////////
 for (let i = 0; i < alignmentbtns.length; i++) {
@@ -29,14 +34,14 @@ for (let i = 0; i < alignmentbtns.length; i++) {
         }
         alignmentbtns[i].classList.add("active-btn");
         console.log(alignmentbtns[i].classList[1]);
-        let cellObject = sheetDB[arid][acid];
+
         cellObject.halign = alignmentbtns[i].classList[1];
         selectedcell.style.textAlign = alignmentbtns[i].classList[1];
-    })
+    });
 }
 
 firstSheet.addEventListener("click", handleActiveSheet);
-
+//>>>>>>>>>>>   ADD button click event <<<<<<<<<<<<<<<<<<<<
 addbuttonContainer.addEventListener("click", function() {
     console.log("add button clicked");
     let sheetArr = document.querySelectorAll(".sheet");
@@ -46,7 +51,7 @@ addbuttonContainer.addEventListener("click", function() {
     let NewSheet = document.createElement("div");
     NewSheet.setAttribute("class", "sheet");
     NewSheet.setAttribute("sheetIdx", idx + 1);
-    NewSheet.innerText = ` Sheet ${ idx + 1 }`;
+    NewSheet.innerText = ` Sheet ${idx + 1}`;
     sheetList.appendChild(NewSheet);
     //remove active sheet class from all sheets
     sheetArr.forEach(function(sheet) {
@@ -59,21 +64,19 @@ addbuttonContainer.addEventListener("click", function() {
     newSheetArr[newSheetArr.length - 1].classList.add("active-sheet");
     // initialise new sheetdb database
     initCurrentSheetDb();
-    let newSheetIdx = idx + 1;
     sheetDB = workSheetDB[idx];
 
     // initialise new page with new values
     initUI();
     NewSheet.addEventListener("click", handleActiveSheet);
-})
-
+});
 
 function handleActiveSheet(e) {
     let MySheet = e.currentTarget;
     let sheetsArr = document.querySelectorAll(".sheet");
     sheetsArr.forEach(function(sheet) {
         sheet.classList.remove("active-sheet");
-    })
+    });
     if (!MySheet.classList[1]) {
         MySheet.classList.add("active-sheet");
     }
@@ -82,7 +85,7 @@ function handleActiveSheet(e) {
     //set  UI from clicked sheet according to database
     setUI(sheetDB);
 }
-
+//>>>>>>>>>>>>>>>>>click event for every cell<<<<<<<<<<<<<<<<<<<
 //............................select event for cells............................./////////////////////
 for (let i = 0; i < Allcells.length; i++) {
     Allcells[i].addEventListener("click", function handleCell() {
@@ -92,8 +95,7 @@ for (let i = 0; i < Allcells.length; i++) {
 
         let colAdd = String.fromCharCode(cid + 65);
 
-
-        let address = colAdd + rowAdd;
+        address = colAdd + rowAdd;
         addressBar.value = address;
         addressBar.setAttribute("rid", rid);
         addressBar.setAttribute("cid", cid);
@@ -103,7 +105,7 @@ for (let i = 0; i < Allcells.length; i++) {
         selectedcell = cell;
 
         //make changed in  top ui according to clicked cell
-        let cellObject = sheetDB[rid][cid];
+        cellObject = sheetDB[rid][cid];
         if (cellObject.bold == true) {
             boldbtn.classList.add("active-btn");
         } else {
@@ -133,12 +135,10 @@ for (let i = 0; i < Allcells.length; i++) {
         fontfamilyselect.value = cellObject.fontFamily;
         fontsizeselect.value = cellObject.fontSize;
         bgcolourselect.value = cellObject.bgColor;
-        colourselect.value = cellObject.fontColor;
+        colourselect.value = cellObject.color;
         formulaInput.value = cellObject.formula;
         //value at the time of click in clicked cell
         cellObject.initialValue = Allcells[i].innerText;
-
-
     });
 }
 Allcells[0].click();
@@ -146,87 +146,69 @@ Allcells[0].click();
 //>>>>>>>>>>>>>>>>>>>>>font family drop down event management<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 fontfamilyselect.addEventListener("change", function() {
     console.log(fontfamilyselect.value);
-    let cell = document.querySelector(`.col[rid ="${arid}"][cid = "${acid}"]`);
-    console.log(cell.getAttribute("rid"));
-    cell.style.fontFamily = fontfamilyselect.value;
-    let cellObject = sheetDB[arid][acid];
+    selectedcell.style.fontFamily = fontfamilyselect.value;
     cellObject.fontFamily = fontfamilyselect.value;
     console.log("font-family changed");
-})
+});
 
 //>>>>>>>>>>>>>>>>>>>>>font size drop down event management<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 fontsizeselect.addEventListener("change", function() {
-    let cellObject = sheetDB[arid][acid];
-
     console.log(selectedcell.getAttribute("rid"));
     selectedcell.style.fontSize = fontsizeselect.value + "px";
     console.log("font-size changed");
     cellObject.fontSize = fontsizeselect.value;
-})
+});
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>colour container<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 colourselect.addEventListener("change", function() {
     selectedcell.style.color = colourselect.value;
-    let cellObject = sheetDB[arid][acid];
     cellObject.color = colourselect.value;
-
-})
+});
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>background  colour container<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 bgcolourselect.addEventListener("change", function() {
     selectedcell.style.backgroundColor = bgcolourselect.value;
-    let cellObject = sheetDB[arid][acid];
     cellObject.bgColor = bgcolourselect.value;
-
-})
+});
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>bold button event<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 boldbtn.addEventListener("click", function() {
-    let cellObject = sheetDB[arid][acid];
     if (selectedcell.style.fontWeight == "bold") {
         selectedcell.style.fontWeight = "normal";
         boldbtn.classList.remove("active-btn");
         cellObject.bold = false;
-
     } else {
         selectedcell.style.fontWeight = "bold";
         cellObject.bold = true;
         boldbtn.classList.add("active-btn");
     }
-
-})
+});
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>italic button event<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 italicbtn.addEventListener("click", function() {
-    let cellObject = sheetDB[arid][acid];
     if (selectedcell.style.fontStyle == "italic") {
         italicbtn.classList.remove("active-btn");
         cellObject.italic = false;
         selectedcell.style.fontStyle = "normal";
-
     } else {
         cellObject.italic = true;
         italicbtn.classList.add("active-btn");
         selectedcell.style.fontStyle = "italic";
     }
-})
+});
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>underline button event<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 underlinebtn.addEventListener("click", function() {
-    let cellObject = sheetDB[arid][acid];
     if (selectedcell.style.textDecoration == "underline") {
         underlinebtn.classList.remove("active-btn");
         cellObject.underline = false;
         selectedcell.style.c = "none";
-
     } else {
         cellObject.underline = true;
         underlinebtn.classList.add("active-btn");
         selectedcell.style.textDecoration = "underline";
     }
-})
-
-
+});
 
 function initUI() {
     for (let i = 0; i < Allcells.length; i++) {
@@ -234,7 +216,7 @@ function initUI() {
         Allcells[i].style.fontStyle = "normal";
         Allcells[i].style.textDecoration = "none";
         Allcells[i].style.fontFamily = "Arial";
-        Allcells[i].style.fontSize = "16px";
+        Allcells[i].style.fontSize = "12px";
         Allcells[i].style.fontColor = "#000000";
         Allcells[i].style.color = "#000000";
         Allcells[i].style.backgroundColor = "#ffffff";
@@ -244,40 +226,42 @@ function initUI() {
         Allcells[i].children = [];
     }
     Allcells[0].click();
-
 }
-
-
 
 //add event on every cell so it can update value in its corresponding database
 
 //input from keyboard  event for every cell
 for (let i = 0; i < Allcells.length; i++) {
     Allcells[i].addEventListener("keyup", function handleCell(e) {
-
-        // console.log(e);
-
-        let cellObject = sheetDB[arid][acid];
-        // let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
         cellObject.value = Allcells[i].innerText;
     });
     Allcells[i].addEventListener("blur", function() {
-        let cellObject = sheetDB[arid][acid];
-        if (cellObject.value != cellObject.initialValue) { //if value changed
+        if (cellObject.value != cellObject.initialValue) {
+            //if value changed
             if (cellObject.formula) {
                 removeFormula(cellObject);
             }
             updateChildren(cellObject);
-
         }
-    })
+    });
 }
 
 function setUI(sheetDB) {
     for (let i = 0; i < sheetDB.length; i++) {
         for (let j = 0; j < sheetDB[i].length; j++) {
             let cell = document.querySelector(`.col[rid="${i}"][cid="${j}"]`);
-            let { bold, italic, underline, fontFamily, fontSize, halign, value, fontColor, bgColor, color } = sheetDB[i][j];
+            let {
+                bold,
+                italic,
+                underline,
+                fontFamily,
+                fontSize,
+                halign,
+                value,
+                fontColor,
+                bgColor,
+                color,
+            } = sheetDB[i][j];
             cell.style.fontWeight = bold == true ? "bold" : "normal";
             cell.innerText = value;
             cell.style.fontStyle = italic;
@@ -288,19 +272,16 @@ function setUI(sheetDB) {
             cell.style.backgroundColor = bgColor;
             cell.style.fontColor = fontColor;
             cell.style.color = color;
-
         }
     }
     Allcells[0].click();
 }
 
-
-
 formulaInput.addEventListener("keydown", function(e) {
     if (e.key == "Enter" && formulaInput.value != "") {
         let newFormula = formulaInput.value;
         // getCurrentCell
-        let cellObject = sheetDB[arid][acid];
+
         let prevFormula = cellObject.formula;
         if (prevFormula == newFormula) {
             return;
@@ -319,9 +300,7 @@ formulaInput.addEventListener("keydown", function(e) {
         // setcontentInDB(value, formula);
         updateChildren(cellObject);
     }
-})
-
-
+});
 
 function evaluateFormula(formula) {
     // "( A1 + A2 )"
@@ -336,6 +315,7 @@ function evaluateFormula(formula) {
             let cellObject = sheetDB[rid][cid];
             // let { value } = cellObject;
             let value = cellObject.value;
+            //replace formula token with their corresponding values
             formula = formula.replace(formulaTokens[i], value);
         }
     }
@@ -351,7 +331,6 @@ function evaluateFormula(formula) {
 
 function setUIByFormula(value, rid, cid) {
     document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`).innerText = value;
-    //  parent add yourself as a children
 
 }
 
@@ -365,10 +344,7 @@ function getRIdCIdfromAddress(adress) {
     let cid = cellColAdr - 65;
     let rid = Number(cellrowAdr) - 1;
     return { rid, cid };
-
 }
-
-
 
 function removeFormula(cellObject) {
     let formula = cellObject.formula;
@@ -390,24 +366,26 @@ function removeFormula(cellObject) {
     cellObject.formula = "";
 }
 
-
 function setFormula(evaluatedValue, formula) {
     selectedcell.innerText = evaluatedValue;
-    let cellObject = sheetDB[arid][acid];
+
     cellObject.value = evaluatedValue;
     cellObject.formula = formula;
     let formulaTokens = formula.split(" ");
     for (let i = 0; i < formulaTokens.length; i++) {
-
         let firstCharOfToken = formulaTokens[i].charCodeAt(0);
-        if (firstCharOfToken >= 65 && firstCharOfToken <= 90 && formulaTokens[i] != addressBar.value) {
+        if (
+            firstCharOfToken >= 65 &&
+            firstCharOfToken <= 90 &&
+            formulaTokens[i] != addressBar.value
+        ) {
             // console.log(formulaTokens[i]);
             let parentRIdCid = getRIdCIdfromAddress(formulaTokens[i]);
 
             let parentCellObject = sheetDB[parentRIdCid.rid][parentRIdCid.cid];
             //  getting value from  db
             //push cell to parent's children array,as it will be affected whenever parent will get new value
-            parentCellObject.children.push(addressBar.value);
+            parentCellObject.children.push(address);
             // console.log(addressBar.value);
         }
     }
