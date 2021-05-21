@@ -27,7 +27,9 @@ navigator.mediaDevices
             a.click();
             window.URL.revokeObjectURL(url)
         })
+
     }).catch((err) => {
+
         console.log(err);
     })
 let videoRecorder = document.querySelector("#record-video");

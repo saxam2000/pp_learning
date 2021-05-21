@@ -290,7 +290,7 @@ function setUI(sheetDB) {
             cell.innerText = value;
             cell.style.fontStyle = italic;
             cell.style.textDecoration = underline;
-            cell.style.fontSize = fontSize;
+            cell.style.fontSize = fontSize + "px";
             cell.style.fontFamily = fontFamily;
             cell.style.textAlign = halign;
             cell.style.backgroundColor = bgColor;
