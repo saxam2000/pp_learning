@@ -89,7 +89,7 @@
         let isMouseDown = false;
         document.body.addEventListener("mousedown", function(e) {
             let x = e.clientX;
-            let y = e.clientY;
+            let y = cordinateOfY(e.clientY);
             tool.beginPath();
             tool.moveTo(x, y);
             isMouseDown = true;
@@ -97,17 +97,17 @@
         })
         document.body.addEventListener("mousemove", function(e) {
             let x = e.clientX;
-            let y = e.clientY;
+            let y = cordinateOfY(e.clientY);
             if (isMouseDown == true) {
                 tool.lineTo(x, y);
                 tool.stroke();
             }
 
 
-        })
+        });
         document.body.addEventListener("mouseup", function(e) {
             let x = e.clientX;
-            let y = e.clientY;
+            let y = cordinateOfY(e.clientY);
             tool.lineTo(x, y);
             tool.stroke();
             isMouseDown = false;
@@ -116,7 +116,9 @@
 
         function cordinateOfY(element) {
 
-            // let cobj = getBoumdo
+            let cobj = board.getBoundingClientRect()
+                // console.log(cobj);
+            return element - cobj.top;
 
         }
     </script>
