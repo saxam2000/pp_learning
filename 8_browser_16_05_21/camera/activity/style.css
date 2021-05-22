@@ -23,10 +23,25 @@ video {
     position: fixed;
     right: 4vw;
     z-index: 5;
-    top: 47vh;
+    top: 37vh;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .record-button {
+    height: 4rem;
+    width: 4rem;
+    border-radius: 50%;
+    background-color: rgb(241, 241, 158);
+    color: blueviolet;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.capture_button {
     height: 4rem;
     width: 4rem;
     border-radius: 50%;
