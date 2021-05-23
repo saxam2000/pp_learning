@@ -1,3 +1,13 @@
+body {
+    overflow: hidden;
+}
+
+canvas {
+    position: absolute;
+    top: 5rem;
+    z-index: 4;
+}
+
 .main_container {
     height: 100vh;
     width: 100vw;
@@ -7,11 +17,13 @@
 .video_container {
     height: 100vh;
     width: 100vw;
+    /* transform: scale(); */
     /* position: absolute;
     left: 55px; */
     /* display: flex;
     align-items: center;
     justify-content: center; */
+    color: #ec9b9b;
 }
 
 video {
@@ -24,29 +36,137 @@ video {
     right: 4vw;
     z-index: 5;
     top: 37vh;
-    height: 200px;
+    height: 9.5rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
 }
 
-.record-button {
+.gallery {
+    position: fixed;
+    right: 4.3vw;
+    z-index: 5;
+    bottom: 12vh;
     height: 4rem;
     width: 4rem;
     border-radius: 50%;
     background-color: rgb(241, 241, 158);
     color: blueviolet;
     font-weight: bold;
+    font-size: 2rem;
+    border: none;
+    outline: none;
+    background-color: white;
+}
+
+.zoombtn_container {
+    position: fixed;
+    right: 4vw;
+    z-index: 5;
+    top: 10vh;
+    height: 24vh;
+    width: 4vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgb(243, 7, 7);
+}
+
+.zoombtn {
+    height: 13vh;
+    /* padding: 2px; */
+    width: 100%;
+}
+
+.record-button {
+    height: 3rem;
+    width: 3rem;
+    border-radius: 50%;
+    background-color: rgb(241, 241, 158);
+    color: blueviolet;
+    font-weight: bold;
     font-size: 1rem;
+    border: none;
+    outline: none;
+    background-color: red;
+    /* animation: animate 0.8s infinite; */
 }
 
 .capture_button {
-    height: 4rem;
-    width: 4rem;
+    height: 3rem;
+    width: 3rem;
     border-radius: 50%;
     background-color: rgb(241, 241, 158);
     color: blueviolet;
     font-weight: bold;
     font-size: 1rem;
+    border: none;
+    outline: none;
+    background-color: white;
+}
+
+.parent_btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 4rem;
+    width: 4rem;
+    border: 5px solid white;
+    border-radius: 50%;
+}
+
+@keyframes animate {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.7);
+    }
+}
+
+.filter-container {
+    height: 50vh;
+    width: 4rem;
+    position: fixed;
+    top: 10vh;
+    left: 5vw;
+    z-index: 5;
+}
+
+.filter {
+    background-image: url("https://picsum.photos/id/237/200/300");
+    height: 20%;
+    background-size: cover;
+    /* mix bg color width the  image */
+    background-blend-mode: color-burn;
+}
+
+.timing {
+    color: white;
+    position: fixed;
+    bottom: 15vh;
+    left: 3vw;
+    font-size: 1.7rem;
+    font-family: sans-serif;
+    font-weight: 600;
+    display: none;
+}
+
+.timing-active {
+    display: block;
+}
+
+.ui-filter {
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    z-index: 4;
+    display: none;
+    /* opacity: 0.5; */
+}
+
+.active {
+    display: block;
 }

@@ -52,6 +52,8 @@
     </div>
     <!-- <h1>Canvas example</h1> -->
     <canvas id="board"></canvas>
+
+
     <script>
         let board = document.getElementById("board");
         // height width
@@ -65,36 +67,41 @@
         // })
         let tool = board.getContext("2d");
         // draw();
-        // x,y ,width,height
-        // color-> black
+        // // x, y, width, height
+        // // color - > black
+
         // function draw() {
         //     tool.fillRect(0, 0, board.width, board.height);
         //     tool.fillStyle = "red";
         //     tool.fillRect(50, 50, board.width / 2, board.height / 2);
-        //     tool.fillRect(60, 60, board.width / 2, board.height / 2);
-        //     //    stroke color
+        //     tool.fillRect(80, 80, board.width / 2, board.height / 2);
+        //     // //    stroke color
         //     tool.strokeStyle = "green";
-        //     // thickness of the line
-        //     // / x,y ,width,height
-        //     tool.lineWidth = 10;
+        //     // // thickness of the line
+        //     // // / x,y ,width,height
+        tool.lineWidth = 10;
         //     tool.strokeRect(250, 300, board.width / 2, board.height / 2);
         // }
-        let color = document.querySelectorAll(".color");
-        for (let i = 0; i < 3; i++) {
-            color[i].addEventListener("click", function(e) {
-                tool.strokeStyle = color[i].classList[1];
-            })
-        }
+        // let color = document.querySelectorAll(".color");
+        // for (let i = 0; i < 3; i++) {
+        //     color[i].addEventListener("click", function(e) {
+        //         tool.strokeStyle = color[i].classList[1];
+        //     })
+        // }
         tool.strokeStyle = "red";
         let isMouseDown = false;
         document.body.addEventListener("mousedown", function(e) {
-            let x = e.clientX;
-            let y = cordinateOfY(e.clientY);
-            tool.beginPath();
-            tool.moveTo(x, y);
-            isMouseDown = true;
+                let x = e.clientX;
+                let y = cordinateOfY(e.clientY);
+                tool.beginPath();
+                tool.moveTo(x, y);
+                isMouseDown = true;
 
-        })
+            })
+            // tool.beginPath();
+            // tool.moveTo(50, 10);
+            // tool.lineTo(100, 100);
+            // tool.stroke();
         document.body.addEventListener("mousemove", function(e) {
             let x = e.clientX;
             let y = cordinateOfY(e.clientY);

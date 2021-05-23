@@ -7,10 +7,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" type="" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 
 <body>
-
+    <canvas id="canvas"></canvas>
+    <div class="filter-container">
+        <div style="background-color: #e9b0823d" class="filter"></div>
+        <div style="background-color: #f7f7f740" class="filter"></div>
+        <div style="background-color: #632e397a" class="filter"></div>
+        <div style="background-color: #77b7eb23" class="filter"></div>
+        <div style="background-color: #ffffff44" class="filter"></div>
+        <div class="filter"></div>
+    </div>
+    <div class="ui-filter"></div>
+    <div class="timing " id="timing">00:00:00</div>
     <div class="main_container">
 
         <div class="video_container">
@@ -18,11 +29,27 @@
             <video controls autoplay></video>
 
         </div>
+
+    </div>
+    <div class="zoombtn_container">
+        <button class="zoombtn zoomin"><i class="fas fa-plus"></i></button>
+        <button class="zoombtn zoomout"><i class="fas fa-minus"></i></button>
     </div>
     <div class="button_container">
-        <button class="record-button" id="record-video">Record</button>
-        <button class="capture_button" id="capture"> capture</button>
-        <script src="script.js"></script>
+        <div class="parent_btn">
+
+            <button class="record-button" id="record-video">R</button>
+        </div>
+        <div class="parent_btn">
+            <button class="capture_button" id="capture"> C</button>
+        </div>
+    </div>
+    <button class="gallery"><a href="gallery.html"><i class="far fa-images"></i></a></button>
+    <script src="database.js">
+    </script>
+
+    <script src="script.js">
+    </script>
 
 </body>
 

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <button class="btn">open</button>
+    <script>
+        let db;
+        let button = document.querySelector(".btn");
+
+        function openGalleryDB() {
+            let openRequest = indexedDB.open("gallery", 1);
+            openRequest.onsuccess = function() {
+                console.log("success");
+                db = openRequest.result;
+                enterData();
+            }
+            openRequest.onerror = function() {
+                console.log("error");
+            }
+            openRequest.onupgradeneeded = function() {
+                db = openRequest.result;
+                console.log("update....");
+                if (!db.objectStoreNames.contains('photos')) {
+                    db.createObjectStore("photos", {
+                        autoIncrement: true
+                    })
+                }
+                if (!db.objectStoreNames.contains('videos')) {
+                    db.createObjectStore("videos", {
+                        autoIncrement: true
+                    })
+                }
+            }
+
+        }
+        openGalleryDB();
+        // enterData();
+        button.addEventListener("click", function() {
+            enterData();
+            getData();
+        })
+
+        function enterData() {
+            let txn = db.transaction("photos", "readwrite");
+            let photos = txn.objectStore("photos");
+            let newPhoto = {
+                id: Date.now(),
+                photo: "dhyani"
+            }
+            let req = photos.add(newPhoto);
+            req.onsuccess = function() {
+                console.log("added successfully", req.result);
+            }
+            req.onerror = function(error) {
+                console.log(error)
+            }
+        }
+
+        function getData() {
+            openGalleryDB();
+            let txn = db.transaction("photos", "readonly");
+            let photo = txn.objectStore("photos");
+            let request = photo.openCursor();
+            request.onsuccess = function() {
+                let cursor = request.result;
+                if (cursor) {
+                    let key = cursor.key; // book key (id field)
+                    let value = cursor.value.photo; // book object
+                    console.log(key, value);
+                    cursor.continue();
+                } else {
+                    console.log("No more books");
+                }
+            }
+            request.onerror = function(error) {
+                console.log("fetching error----", error);
+            }
+
+
+        }
+    </script>
+</body>
+
+</html>
