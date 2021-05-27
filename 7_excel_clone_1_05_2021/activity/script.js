@@ -157,8 +157,11 @@ for (let i = 0; i < Allcells.length; i++) {
         formulaInput.value = cellObject.formula;
         //value at the time of click in clicked cell
         cellObject.initialValue = Allcells[i].innerText;
+        // console.log(cellObject.children);
     });
 }
+let cycleStartIndex = "A1";
+let cycleEndIndex = "B1";
 Allcells[0].click();
 
 //>>>>>>>>>>>>>>>>>>>>>font family drop down event management<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -305,6 +308,21 @@ formulaInput.addEventListener("keydown", function(e) {
     if (e.key == "Enter" && formulaInput.value != "") {
         let newFormula = formulaInput.value;
         // getCurrentCell
+        let formulaTokens = newFormula.split(" ");
+        cycleStartIndex = addressBar.value;
+        for (let i = 0; i < formulaTokens.length; i++) {
+            let firstCharOfToken = formulaTokens[i].charCodeAt(0);
+            if (firstCharOfToken >= 65 && firstCharOfToken <= 90) {
+                if (!isFormulaValid(formulaTokens[i], addressBar.value)) {
+                    alert(`Cycle formation detected from ${cycleStartIndex} to ${formulaTokens[i]}`);
+                    return;
+                }
+
+
+            }
+        }
+
+        // if (isFormulaValid(newFormula,cellObject.children)) {
 
         let prevFormula = cellObject.formula;
         if (prevFormula == newFormula) {
@@ -323,8 +341,29 @@ formulaInput.addEventListener("keydown", function(e) {
         // db -> works
         // setcontentInDB(value, formula);
         updateChildren(cellObject);
+        // }
     }
 });
+
+function isFormulaValid(token, currentAddress) {
+    if (currentAddress == token) {
+        cycleEndIndex = currentAddress;
+        return false;
+    }
+    let { rid, cid } = getRIdCIdfromAddress(currentAddress);
+    childcellObj = sheetDB[rid][cid];
+    let childrenArray = childcellObj.children;
+    // console.log(currentAddress, " ----->", childrenArray);
+    for (let i = 0; i < childrenArray.length; i++) {
+        if (!isFormulaValid(token, childrenArray[i])) {
+            cycleEndIndex = currentAddress;
+            return false;
+        }
+    }
+    return true;
+
+}
+
 
 function evaluateFormula(formula) {
     // "( A1 + A2 )"
