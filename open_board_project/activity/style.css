@@ -1,0 +1,114 @@
+body {
+    margin: 0px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.hide {
+    display: none;
+}
+
+img {
+    height: 5rem;
+    width: 5rem;
+}
+
+#board {
+    cursor: crosshair;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: safe;
+    align-items: center;
+    border: 2px solid violet;
+    height: 5rem;
+    width: 100vw;
+}
+
+.red {
+    background-color: red;
+}
+
+.green {
+    background-color: green;
+}
+
+.blue {
+    background-color: blue;
+}
+
+.color {
+    height: 1rem;
+    width: 1rem;
+    padding: 5px;
+}
+
+.color_container {
+    width: 200px;
+    display: flex;
+    height: 4rem;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.eraser {
+    margin: auto 2rem;
+    border: 2px solid red;
+}
+
+.undoRedo {
+    margin: auto 2rem;
+    border: 2px solid green;
+}
+
+.size {
+    margin: auto 2rem;
+    border: 2px solid yellow;
+    position: relative;
+    /* z-index: 2; */
+}
+
+.rangeSelectBox {
+    position: absolute;
+    height: 4rem;
+    width: 9rem;
+    left: -3rem;
+    top: 1.5rem;
+    border: 1px solid grey;
+}
+
+.rangeSlider {
+    height: 2rem;
+    width: 8rem;
+    border: 2px solid greenyellow;
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 15px;
+    border-radius: 5px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider:hover {
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #04AA6D;
+    cursor: pointer;
+}
