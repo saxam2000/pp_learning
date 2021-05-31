@@ -29,45 +29,59 @@ img {
 }
 
 .red {
-    background-color: red;
+    color: red;
 }
 
 .green {
-    background-color: green;
+    color: green;
 }
 
 .blue {
-    background-color: blue;
+    color: blue;
 }
 
 .color {
     height: 1rem;
     width: 1rem;
-    padding: 5px;
+    padding: auto 5px;
+}
+
+.colorpens {
+    background-color: bisque;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 70%;
+    padding: auto 0.5em;
+    height: 2.5rem;
 }
 
 .color_container {
-    width: 200px;
+    width: 12rem;
     display: flex;
-    height: 4rem;
+    height: 100%;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
 }
 
 .eraser {
     margin: auto 2rem;
-    border: 2px solid red;
+    /* border: 2px solid red; */
 }
 
 .undoRedo {
     margin: auto 2rem;
-    border: 2px solid green;
+    width: 4.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* border: 2px solid green; */
 }
 
 .size {
     margin: auto 2rem;
-    border: 2px solid yellow;
+    /* border: 2px solid yellow; */
     position: relative;
     /* z-index: 2; */
 }
@@ -111,4 +125,17 @@ img {
     border-radius: 50%;
     background: #04AA6D;
     cursor: pointer;
+}
+
+.icon {
+    font-size: 1.5rem;
+    color: rgb(10, 114, 212);
+    height: 2rem;
+    width: 2rem;
+}
+
+.pen {
+    font-size: 1.5rem;
+    height: 2rem;
+    width: 2rem;
 }

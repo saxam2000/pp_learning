@@ -13,7 +13,20 @@ let rangeVisible = false;
 let hover = false;
 let undoStack = [];
 let redoStack = [];
+add();
 toolfillcolor = "white"
+let firstUndo = true;
+let firstredo = true;
+board.height = window.innerHeight;
+board.width = window.innerWidth;
+
+let tool = board.getContext("2d");
+tool.lineCap = "round"
+tool.lineWidth = 10;
+
+tool.strokeStyle = "pattern";
+let isDraw = false;
+
 
 let redo = document.querySelector(".redo");
 let undo = document.querySelector(".undo");
@@ -34,13 +47,11 @@ board.addEventListener("click", function() {
 })
 slider.addEventListener("input", function(e) {
 
-        // console.log(e);
-        tool.lineWidth = (this.value / 100) * 15;
-        rangeSliderValue.innerText = Number.parseInt(this.value);
-    })
-    // slider.oninput = function() {
-    //     // output.innerHTML = this.value;
-    // }
+    // console.log(e);
+    tool.lineWidth = (this.value / 100) * 15;
+    rangeSliderValue.innerText = Number.parseInt(this.value);
+})
+
 
 
 sizeIcon.addEventListener("click", function() {
@@ -84,34 +95,32 @@ function changeToolColor(e) {
 }
 
 
-// height width
-board.height = window.innerHeight;
-board.width = window.innerWidth;
 
-let tool = board.getContext("2d");
-tool.lineCap = "round"
-tool.lineWidth = 10;
 
-tool.strokeStyle = "pattern";
-let isDraw = false;
+
+//>>>>>>>>>>>>>>>>>>>>>>>Drawing in Canvas
 board.addEventListener("mousedown", function(e) {
     if (hover) {
         e.preventDefault();
         return;
     }
-    let x = e.clientX;
+    // cordinates are moved  because canvas is shifted from real origin of document
+    let x = cordinateOfX(e.clientX);
     let y = cordinateOfY(e.clientY);
     tool.beginPath();
     tool.moveTo(x, y);
     isDraw = true;
 
 })
+
+
+
 board.addEventListener("mousemove", function(e) {
     if (hover) {
         e.preventDefault();
         return;
     }
-    let x = e.clientX;
+    let x = cordinateOfX(e.clientX);
     let y = cordinateOfY(e.clientY);
     if (isDraw == true) {
         tool.lineTo(x, y);
@@ -125,7 +134,7 @@ board.addEventListener("mouseup", function(e) {
         e.preventDefault();
         return;
     }
-    let x = e.clientX;
+    let x = cordinateOfX(e.clientX);
     let y = cordinateOfY(e.clientY);
     tool.lineTo(x, y);
     tool.stroke();
@@ -141,15 +150,24 @@ function cordinateOfY(element) {
     return element - cobj.top;
 
 }
-let firstUndo = true;
-let firstredo = true;
+
+function cordinateOfX(element) {
+
+    let cobj = board.getBoundingClientRect()
+        // console.log(cobj);
+    return element - cobj.left;
+
+}
+
+eraser.addEventListener("click", function() {
+    board.style.cursor = "cell";
+})
 
 undo.addEventListener("click", function() {
     if (undoStack.length == 0) {
-        tool.clearRect(0, 0, board.width, board.height);
         return;
     }
-    if (firstUndo == true) {
+    if (firstUndo == true) { //for the first time undo it will render the current state so for first time we press undo twice
         firstRedo = true;
         redoStack.push(undoStack.pop());
         firstUndo = false;
@@ -198,9 +216,9 @@ function add() {
     if (undoStack.length > 20) {
         undoStack.shift();
     }
-    let img = document.createElement("img");
-    img.setAttribute("src", imglink);
-    document.body.appendChild(img);
+    // let img = document.createElement("img");
+    // img.setAttribute("src", imglink);
+    // document.body.appendChild(img);
     console.log(undoStack);
 
 }
