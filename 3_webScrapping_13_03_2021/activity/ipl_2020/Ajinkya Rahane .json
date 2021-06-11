@@ -1,1 +1,49 @@
-[{"name":"Ajinkya Rahane ","r":"2","b":"4","fours":"0","sixes":"0","Result":"Mum Indians won by 5 wickets (with 8 balls remaining)","team":"Delhi Capitals "}][{"name":"Ajinkya Rahane ","r":"60","b":"46","fours":"5","sixes":"1","Result":"Capitals won by 6 wickets (with 6 balls remaining)","team":"Delhi Capitals "}][{"name":"Ajinkya Rahane ","r":"0","b":"3","fours":"0","sixes":"0","Result":"Mum Indians won by 57 runs","team":"Delhi Capitals "}][{"name":"Ajinkya Rahane ","r":"8","b":"10","fours":"1","sixes":"0","Result":"Capitals won by 5 wickets (with 1 ball remaining)","team":"Delhi Capitals "}][{"name":"Ajinkya Rahane ","r":"2","b":"9","fours":"0","sixes":"0","Result":"Capitals won by 13 runs","team":"Delhi Capitals "}][{"name":"Ajinkya Rahane ","r":"15","b":"15","fours":"3","sixes":"0","Result":"Mum Indians won by 5 wickets (with 2 balls remaining)","team":"Delhi Capitals "}]
+[{
+    "name": "Ajinkya Rahane ",
+    "r": "2",
+    "b": "4",
+    "fours": "0",
+    "sixes": "0",
+    "Result": "Mum Indians won by 5 wickets (with 8 balls remaining)",
+    "team": "Delhi Capitals "
+}][{
+    "name": "Ajinkya Rahane ",
+    "r": "60",
+    "b": "46",
+    "fours": "5",
+    "sixes": "1",
+    "Result": "Capitals won by 6 wickets (with 6 balls remaining)",
+    "team": "Delhi Capitals "
+}][{
+    "name": "Ajinkya Rahane ",
+    "r": "0",
+    "b": "3",
+    "fours": "0",
+    "sixes": "0",
+    "Result": "Mum Indians won by 57 runs",
+    "team": "Delhi Capitals "
+}][{
+    "name": "Ajinkya Rahane ",
+    "r": "8",
+    "b": "10",
+    "fours": "1",
+    "sixes": "0",
+    "Result": "Capitals won by 5 wickets (with 1 ball remaining)",
+    "team": "Delhi Capitals "
+}][{
+    "name": "Ajinkya Rahane ",
+    "r": "2",
+    "b": "9",
+    "fours": "0",
+    "sixes": "0",
+    "Result": "Capitals won by 13 runs",
+    "team": "Delhi Capitals "
+}][{
+    "name": "Ajinkya Rahane ",
+    "r": "15",
+    "b": "15",
+    "fours": "3",
+    "sixes": "0",
+    "Result": "Mum Indians won by 5 wickets (with 2 balls remaining)",
+    "team": "Delhi Capitals "
+}]
