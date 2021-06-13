@@ -7,28 +7,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
-
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-
     <title>Document</title>
 </head>
 
 <body>
     <div id="root"></div>
-    <!-- //functional Component let {person='Default'}=props -->
     <script type="text/babel">
-        function Hello({person='Default',age='0'}) { return(
-        <h1>Hello {person} Age {age} </h1>
-        ) } function Hellos() { return(
+
+        class Counter extends React.Component { constructor() { super(); this.state={ count:0 } } increment = ()=>{ this.setState({count:this.state.count+1}); } ;render(){ console.log('render'); return(
         <React.Fragment>
-            <Hello person='Tushar' age='21' />
-            <Hello person='Alexander' />
-            <Hello/>
-            <Hello/>
+            <h1>{this.state.count}</h1>
+            <button onClick={this.increment}>+</button>
         </React.Fragment>
-        ) } ReactDOM.render(
-        <Hellos/>,document.getElementById('root'));
+        ) } } ReactDOM.render(
+        <Counter/>,document.getElementById('root'))
     </script>
+
 </body>
 
 </html>
