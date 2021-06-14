@@ -75,6 +75,7 @@ class InputComponent extends Component {
 class TaskList extends Component {
   constructor(props) {
     super(props);
+    this.state={};
   }
 
   render() {
