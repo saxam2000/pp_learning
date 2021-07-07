@@ -7,6 +7,7 @@ function App() {
   return (
     <>
       <Router>
+        {/* //display several pages over different paths */}
         <Nav />
         <Switch>
           <Route path="/" exact component={Home} />
