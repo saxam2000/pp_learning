@@ -1,7 +1,7 @@
-import firebase from "firebase/app"
-import "firebase/auth"
-import 'firebase/storage'
-import 'firebase/firestore'
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/storage";
+import "firebase/firestore";
 firebase.initializeApp({
   apiKey: "AIzaSyCBpPU9iHX378oZSKTqBXUPBzbpuo-gkME",
   authDomain: "reels-40b22.firebaseapp.com",
@@ -12,10 +12,11 @@ firebase.initializeApp({
 });
 export const auth = firebase.auth();
 const firestore = firebase.firestore(); //we will not export whole firestore so that we can only provide those information which we want to  provide
-export const database ={
-  users:firestore.collection('users'),
-  getCurrentTimeStamp : firebase.firestore.FieldValue.serverTimestamp
-}
+export const database = {
+  posts: firestore.collection("posts"),
+  users: firestore.collection("users"),
+  getCurrentTimeStamp: firebase.firestore.FieldValue.serverTimestamp,
+};
 //   export default firebase
 // ..we will not pass whole of firebase we will only those components which are needed  and only which we want to provide
 export const storage = firebase.storage();

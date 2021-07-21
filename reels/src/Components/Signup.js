@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../Context/AuthProvider";
 import { storage, database } from "../firebase";
+import { useHistory } from "react-router-dom";
 
 function Signup() {
     const[name,setName]=useState('');
@@ -11,7 +12,8 @@ function Signup() {
   const [file, setFile] = useState("");
   const [error, setError] = useState("");
   const authcontext = useContext(AuthContext);
-  const { signup } = useContext(AuthContext);
+  const { signup ,currentUser} = useContext(AuthContext);
+  const history=useHistory();
 //   console.log(authcontext.currentUser);
 //   console.log(signup);
 
@@ -48,6 +50,7 @@ function fn2(error){
 async function fn3(){
     let downloadUrl = await uploadTaskListener.snapshot.ref.getDownloadURL();
     console.log('File available at', downloadUrl);
+    console.log(database.users) 
           await database.users.doc(uid).set({
                 email:email,
                 userId:uid,
@@ -61,6 +64,7 @@ async function fn3(){
 
 setLoading(false);
 console.log('User has Signed up');
+history.push('/');
 
     //   setLoading(false);
     } catch (e) {
@@ -75,6 +79,11 @@ console.log('User has Signed up');
     console.log(file);
     if(file!=null)setFile(file);
   };
+  useEffect(()=>{
+    if(currentUser){
+      history.push('/');
+    }
+  },[])
 
   return (
     <div>

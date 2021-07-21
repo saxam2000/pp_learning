@@ -7,8 +7,8 @@ import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   // <React.StrictMode>
-    // <App />
-    <Main/>
+    <App />
+    // <Main/>//material ui signup page
   // </React.StrictMode>
   ,
   document.getElementById('root')
