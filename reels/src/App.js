@@ -4,6 +4,7 @@ import Signup from "./Components/Signup";
 import AuthProvider from "./Context/AuthProvider";
 import Login from "./Components/Login";
 import Logout from "./Components/Logout";
+// import Logins from "./Components/Logins";
 import Loa from "./Components/Loa";
 import Feed from "./Components/Feed";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -20,6 +21,7 @@ function App() {
           <Route exact path='/login' component={Login}/>
           <Route exact path='/signup' component={Signup}/>
           <Route exact path='/logout' component={Logout}/>
+
         </Switch>
       </AuthProvider>
     </Router>

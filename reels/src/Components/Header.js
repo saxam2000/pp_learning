@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useContext} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -11,6 +11,8 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormGroup from "@material-ui/core/FormGroup";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
+import {AuthContext} from '../Context/AuthProvider';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,9 +31,11 @@ function Header(props) {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const {logout}=useContext(AuthContext)
 
   const handleChange = (event) => {
     setAuth(event.target.checked);
+    logout();
   };
 
   const handleMenu = (event) => {
@@ -43,7 +47,7 @@ function Header(props) {
   };
 
   return (
-    <div className={classes.root} style={{display:"none"}}>
+    <div className={classes.root}>
       <FormGroup>
         <FormControlLabel 
           control={

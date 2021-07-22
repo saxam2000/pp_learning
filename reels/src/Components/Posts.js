@@ -68,19 +68,26 @@ function Posts({userData=null}) {
   const classes = useStyles();
   const[posts,setPosts] = useState(null);
   const [openId, setOpenId] = useState(null);
+  
+  
   const handleClickOpen = (id) => {
     setOpenId(id);
   };
   const handleClose = () => {
     setOpenId(null);
+
   };
-      const callback = entries=>{
-        entries.forEach(element => {
+
+  //this callback will be passsed in intersectio observer it is fuction which declares how observer will work
+      const callback = entries=>{//entries is all the entries observer is applied 
+        entries.forEach(element => {//to every entry/post
             console.log(element);
-            let el = element.target.childNodes[0];
+            let el = element.target.childNodes[0];//el is video
             el.play().then(()=>{
                 //if this video is not in viewport then pause it
-                if(!el.paused && !element.isIntersecting)
+
+                //only perform pause when video is played or it will give error ... therefore pause work is done inside this then function ....this will help avoiding this error 
+                if(!el.paused && !element.isIntersecting)//isItersecting will give true if element is visible in sreen according to criteria given in threshhold
                 {
                     el.pause();                
                 }
@@ -88,35 +95,43 @@ function Posts({userData=null}) {
 
         });
     }
-    const observer = new IntersectionObserver(callback,{ threshold:0.85 });
+    const observer = new IntersectionObserver(callback,{ threshold:0.85 });//intersection observer
+
+    //............attaching listener to posts collection........
     useEffect(()=>{
       let parr=[];
-      const unsub = database.posts.orderBy('createdAt','desc').onSnapshot(querySnapshot=>{
-        parr=[];
-        querySnapshot.forEach((doc)=>{
+      const unsub = database.posts.orderBy('createdAt','desc').onSnapshot(querySnapshot=>{//whienever there will be change in posts collection it will inform us ...... it will update parr(Posts array) and will re render posts in the order such that newer added post wiill be in top....
+        parr=[];//empting the array is important or it will all posts again appending previous posts
+        querySnapshot.forEach((doc)=>{//doc is refence for every post..it gives us id and and object of post
           console.log(doc.data(),+"  "+doc.id);
-          let data = {...doc.data(),postId:doc.id}
-          parr.push(data)
+          let data = {...doc.data(),postId:doc.id} // data array contain object of post and aloso postId
+          parr.push(data)//pushed in postArr
         })
-        setPosts(parr);
+        setPosts(parr);//state of post updated and rerendring of post will occur..
 
       })
-      return unsub;
+      return unsub;//detach the listener
     }
     ,[])
+
+// attaching observer ot every video rendered
     useEffect(()=>{
       let elements = document.querySelectorAll('.videos');
       elements.forEach(el=>{
-        observer.observe(el);
+        observer.observe(el);// attach intersection observer to play the video only wihen it is visible on screen otherwise pause the video
       })
       return ()=>{
-        observer.disconnect();
+        observer.disconnect(); //detach intersection observer .....
       }
-    },[posts])
+    },[posts])// this useEffect will work when posts state is updated
+
+
     return (
       <>
         <div className='place'>
         </div>
+
+        {/* until posts appear in post array show loading */}
         {posts==null?<CircularProgress className={classes.loader} color="secondary" />:
         <div className='video-container' id='video-container'>
           {

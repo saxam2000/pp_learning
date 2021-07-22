@@ -13,7 +13,8 @@ const useStyles = makeStyles({
 function Comments(props) {
   const classes = useStyles();
   const [comments, setComments] = useState(null);
-  useEffect(async () => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect( async () => {
     let arr = [];
     for (let i = 0; i < props.postData.comments.length; i++) {
       let cid = props.postData.comments[i];
