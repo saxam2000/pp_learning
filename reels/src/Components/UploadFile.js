@@ -70,6 +70,7 @@ function UploadFile(props) {
                   let res = await database.users.doc(props.userData.userId).update({
                       postIds:[...props.userData.postIds,docRef.id]
                   })
+                  console.log("printing res from uploadFile.js-->",res);
               }).then(()=>{
                   setLoading(false)
               }).catch(e=>{
@@ -97,7 +98,7 @@ function UploadFile(props) {
             <label htmlFor='icon-button-file'>
             <Button disabled={loading} variant="outlined" component='span' className={classes.button} 
             size='medium' color="secondary">
-                Secondary
+                Upload Video
             </Button>
 
             </label>

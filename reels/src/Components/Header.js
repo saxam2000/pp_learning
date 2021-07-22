@@ -43,11 +43,11 @@ function Header(props) {
   };
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} style={{display:"none"}}>
       <FormGroup>
-        <FormControlLabel
+        <FormControlLabel 
           control={
-            <Switch
+            <Switch 
               checked={auth}
               onChange={handleChange}
               aria-label="login switch"

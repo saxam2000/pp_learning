@@ -1,47 +1,35 @@
-import React,{useState,useEffect,useContext} from 'react'
-import { AuthContext } from '../Context/AuthProvider';
-import Header from './Header'
-import {database}from '../firebase'
+import React,{useContext,useEffect,useState} from 'react'
+import Header from './Header';
+import {AuthContext} from '../Context/AuthProvider';
+import {database} from '../firebase'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import UploadFile from './UploadFile';
-import Button from '@material-ui/core/Button';
-
-
-
-
+import './Feed.css';
+import Posts from './Posts';
 function Feed() {
-    const[loading,setLoading]=useState(false);
-    const[error,setError]=useState(null);
-    const types=['video/mp4','video/webm','video/ogg']
+    const {currentUser} =useContext(AuthContext);
     const [userData,setUserData] = useState(null);
-    const {currentUser}=useContext(AuthContext);
     useEffect(()=>{
-        const unsub=database.users.doc(currentUser.uid)
-    .onSnapshot((doc) => {//Event Listener on database
-        console.log("Current data: ", doc.data());
-        setUserData(doc.data());
-    });
-    
+        const unsub = database.users.doc(currentUser.uid).onSnapshot((doc)=>{
+            // console.log(doc.data());
+            setUserData(doc.data())
+        })
     },[currentUser])
-
-    
     return (
-        <div>
-            {userData==null?<CircularProgress />:<><Header userData={userData}/> 
-            <div style={{height:'1.5vh'}}/>
-            <div className='feed-container'>
+        <>
+        { userData==null ? <CircularProgress />:<>
+        <Header userData={userData} />
+        <div style={{height:'1.5vh'}}/>
+        <div className='feed-container'>
             <div className='center'>
-            {/* /<Button variant="outlined" color="secondary">
-                Upload
-            </Button> */}
                 <UploadFile userData={userData}/>
+                <Posts userData={userData}/>
             </div>
         </div>
-            </>
-            }
 
-            <h1>Welcome to feed</h1>
-        </div>
+        </>
+        }
+        </>
     )
 }
 

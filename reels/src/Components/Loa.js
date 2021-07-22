@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import vid1 from "./vid1.mp4";
 import vid2 from "./vid2.mp4";
-import Video from "./Video";
+import Video from "./VideoIO";
 // import vid3 '
 
 function Loa() {

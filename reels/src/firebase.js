@@ -13,9 +13,10 @@ firebase.initializeApp({
 export const auth = firebase.auth();
 const firestore = firebase.firestore(); //we will not export whole firestore so that we can only provide those information which we want to  provide
 export const database = {
-  posts: firestore.collection("posts"),
-  users: firestore.collection("users"),
-  getCurrentTimeStamp: firebase.firestore.FieldValue.serverTimestamp,
+   users:firestore.collection('users'),
+  posts:firestore.collection('posts'),
+  comments:firestore.collection('comments'),
+  getCurrentTimeStamp : firebase.firestore.FieldValue.serverTimestamp
 };
 //   export default firebase
 // ..we will not pass whole of firebase we will only those components which are needed  and only which we want to provide
