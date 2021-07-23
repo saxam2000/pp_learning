@@ -10,6 +10,12 @@
 }
 .videos{
     position: relative;
+    align-self: center;
+    width:40vw;
+    height:100%;
+    margin: 17vh;
+ 
+    background-color: #cad6d2;
 }
 
 .place
@@ -62,10 +68,14 @@
 }
 
 .video-container {
+    display:flex;
+    flex-direction:column;
+    justify-content:"center";
     
     height: 80vh;
+    width:60vw;
     border-radius: 20px;
-    background-color: white;
+    background-color: rgb(252, 255, 250);
     overflow: scroll;
     scroll-snap-type: y mandatory;
     scrollbar-width: none;

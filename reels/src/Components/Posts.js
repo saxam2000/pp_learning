@@ -141,7 +141,7 @@ function Posts({userData=null}) {
                   <Video source={post.pUrl} id={post.pId}/>
                   <div className='fa' style={{display:'flex'}}>
                     <Avatar src={post.uProfile}></Avatar>
-                    <h4>{post.uName}</h4>
+                    <h4 style={{Color:"black"}}>{post.uName}</h4>
                   </div>
                   <Likes userData={userData} postData={post}/>
                   <ChatBubbleIcon onClick={() => handleClickOpen(post.pId)} className={`${classes.ci} icon-styling`} />
@@ -149,7 +149,7 @@ function Posts({userData=null}) {
                         <MuiDialogContent>
                           <div className='dcontainer'>
                             <div className='video-part'>
-                              <video  autoPlay={true} className='video-styles2' controls id={post.id} muted="muted" type="video/mp4" >
+                              <video  height="80vh" width="50vw" autoPlay={true} className='video-styles2' controls id={post.id} muted="muted" type="video/mp4" >
                                 <source src={post.pUrl} type="video/webm" />
                               </video>
                             </div>
