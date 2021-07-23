@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 
-import Alert from '@material-ui/lab/Alert';
-
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
@@ -20,6 +18,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
+import Alert from '@material-ui/lab/Alert';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles({
  
@@ -53,6 +53,11 @@ const useStyles = makeStyles({
       fontSize:"1rem",
       fontStyle:"italic",
     },
+    errorDisp:{
+      position:"absolute",
+      top:"22vh",
+      left:"10vw"
+  },
   },
 );
 
@@ -107,8 +112,30 @@ function Signup() {
 
     async function handleSignUp(e) {
       e.preventDefault(); //form onsubmit rerenders the page to avoid that functionality preventdefault is used
+      setLoading(true);
+      if(name===""){
+        setLoading(false);
+        setError("Please enter Name.....");
+        setTimeout(() => {
+          setError("");
+          
+        }, 2000);
+        return;
+      }
       try {
+        
         setLoading(true);
+      
+        if(file===""){
+          setLoading(false);
+          setError("Please Upload a Profile Picture");
+          setTimeout(() => {
+            setError("");
+            
+          }, 2000);
+          return;
+          
+        }
         let res = await signup(email, password);
         let uid = res.user.uid;
         console.log(uid);
@@ -127,11 +154,11 @@ function Signup() {
       console.log('Upload is ' + progress + '% done');
   }
   function fn2(error){
+    setLoading(false)
       setError(error);
       setTimeout(()=>{
           setError('')
       },2000);
-      setLoading(false)
   
       
   }
@@ -142,7 +169,7 @@ function Signup() {
             await database.users.doc(uid).set({
                   email:email,
                   userId:uid,
-                  username:user,
+                  username:name,
                   createdAt:database.getCurrentTimeStamp(),
                   profileUrl:downloadUrl,
                   postIds:[]
@@ -157,15 +184,20 @@ function Signup() {
       //   setLoading(false);
       } catch (e) {
         console.log(e);
+        setLoading(false);
         setError(e.message);
         setTimeout(()=>setError(''),2000);
-        setLoading(false);
       }
     }
     const handleFileSubmit = (e) => {
         let file=e.target.files[0];
       console.log(file);
       if(file!=null)setFile(file);
+      else if(file==null){
+        setError("Please upload profile picture...");
+        setLoading(false);
+        setTimeout(()=>setError(''),2000);
+      }
     };
 
     useEffect(()=>{
@@ -178,28 +210,31 @@ function Signup() {
   console.log("Email ===", email);
   // const[name,setName]=React.useState("Saksham");
   return (
-    <div className={classes.signupPage}><Navbar style={{width:"80vw"}}/>
+<>
+    {loading?<><CircularProgress className={classes.loader} color="secondary" /></>:
+
+      <>
+      <div className={classes.signupPage}><Navbar style={{width:"80vw"}}/>
+    {error!==""?<Alert className={classes.errorDisp} severity="error">{error}</Alert>:<></>}
     <div style={{ backgroundImage: `url(${background}) `,backgroundSize: 'cover',
             overflow: 'hidden', width:"100vw",height:"96vh"}}>
 
-              <h1 className={classes.heading}>SignUp</h1>
-              {error!==""?<Alert className={classes.errorDisp} style={{position:"absolute",top:"23vh",left:"12vw"}} severity="error">{error}</Alert>:<></>}
+            <h1 className={classes.heading}>SignUp</h1>
 
     
-    <div
-      className={classes.form}
-      style={{ margin: "8px", position: "relative", top: "20vh", left: "10vw" ,width:"50vw"}}
-    >
+            <div
+            className={classes.form}
+            style={{ margin: "8px", position: "relative", top: "20vh", left: "10vw" ,width:"50vw"}}
+            >
       <FormControl>
         {/* <InputLabel htmlFor="my-input">Email address</InputLabel> */}
       
         <TextFields
-        required
           value={name}
-          Label="Name*"
-          changeVal={(e)=>{setName(e.target.value)}}
+          Label="Name"
+          changeVal={setName}
           style={{ backgroundColor: "white", Color: "red" }}
-        ></TextFields>
+          ></TextFields>
         
       </FormControl>
 
@@ -207,7 +242,7 @@ function Signup() {
         {/* <InputLabel htmlFor="my-input">Email address</InputLabel> */}
 
        
-        <TextFields required value={email} Label="Email *" onChange={(e)=>setEmail(e.target.value)}></TextFields>
+        <TextFields required value={email} Label="Email" changeVal={setEmail}></TextFields>
         <FormHelperText id="my-helper-text">
           We'll never share your email.
         </FormHelperText>
@@ -221,13 +256,12 @@ function Signup() {
 
           {/* <Input id="my-input" aria-describedby="my-helper-text" /> */}
           <TextFields
-            value={password}
-            required
+            value=""
             fullwidth="true"
-            Label="PassWord *"
-            changeVal={(e)=>{setPassword(e.target.value)}}
+            Label="PassWord"
+            changeVal={setPassword}
             style={{ font: "16px", margin: "0px 8px", width: "100%" }}
-          ></TextFields>
+            ></TextFields>
           <FormHelperText id="my-helper-text">
             We'll never share your Info.
           </FormHelperText>
@@ -241,7 +275,7 @@ function Signup() {
         component='span' 
         className={classes.button}
         startIcon={<CloudUploadIcon />}
-      >
+        >
         Upload Profile Image
       </Button>
       </label>
@@ -261,7 +295,10 @@ function Signup() {
     <h4 className={classes.loginLink}>Already have an account ? To Login <Button onClick={gotoLogin} className={classes.loginButton}>Click here</Button></h4>
     </div>
     </div>
-  );
-}
+    </>
+  }
+  </>
+    );
+  }
 
 export default Signup;
