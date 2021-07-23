@@ -12,6 +12,7 @@ import FormGroup from "@material-ui/core/FormGroup";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import {AuthContext} from '../Context/AuthProvider';
+import Avatar from '@material-ui/core/Avatar';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -83,10 +84,11 @@ function Header(props) {
                 color="inherit"
               >{console.log(props.userData.profileUrl)}
            
-
-                 <img src={props.userData.profileUrl} height="26px" width='26px' style={{borderRadius:"50%"}}border-radius="50%"alt="profileImage"/>
+           <Avatar src={props.userData.profileUrl}></Avatar>
+           <div style={{height:"1rem" ,display:"flex",justifyContent:"center",alignItems:"center" ,fontSize:"1rem"}}>{props.userData.username}</div>
+                 {/* <img src={props.userData.profileUrl} height="26px" width='26px' style={{borderRadius:"50%"}}border-radius="50%"alt="profileImage"/> */}
           
-                <AccountCircle />
+                {/* <AccountCircle /> */}
               </IconButton>
               <Menu
                 id="menu-appbar"
