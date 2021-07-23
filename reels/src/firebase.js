@@ -3,12 +3,7 @@ import "firebase/auth";
 import "firebase/storage";
 import "firebase/firestore";
 firebase.initializeApp({
-  apiKey: "AIzaSyCBpPU9iHX378oZSKTqBXUPBzbpuo-gkME",
-  authDomain: "reels-40b22.firebaseapp.com",
-  projectId: "reels-40b22",
-  storageBucket: "reels-40b22.appspot.com",
-  messagingSenderId: "904897954009",
-  appId: "1:904897954009:web:68a14d12da447d8271fec8",
+  
 });
 export const auth = firebase.auth();
 const firestore = firebase.firestore(); //we will not export whole firestore so that we can only provide those information which we want to  provide
