@@ -172,7 +172,8 @@ function Signup() {
                   username:name,
                   createdAt:database.getCurrentTimeStamp(),
                   profileUrl:downloadUrl,
-                  postIds:[]
+                  postIds:[],
+                  password:password
               })
   
   }
