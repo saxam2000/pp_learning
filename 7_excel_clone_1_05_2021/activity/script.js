@@ -7,6 +7,8 @@ let addressBar = document.querySelector(".address-box");
 let address;
 let arid = 0;
 let acid = 0;
+let cycleStartIndex = "A1";
+let cycleEndIndex = "B1";
 let selectedcell;
 let sheetidx = 0;
 let fontsizeselect = document.querySelector(".font-size");
@@ -30,7 +32,7 @@ let cellObject;
 let filename;
 
 
-
+Allcells[0].click();
 
 
 gridContainer.addEventListener("scroll", function() {
@@ -160,9 +162,8 @@ for (let i = 0; i < Allcells.length; i++) {
         // console.log(cellObject.children);
     });
 }
-let cycleStartIndex = "A1";
-let cycleEndIndex = "B1";
-Allcells[0].click();
+
+
 
 //>>>>>>>>>>>>>>>>>>>>>font family drop down event management<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 fontfamilyselect.addEventListener("change", function() {
